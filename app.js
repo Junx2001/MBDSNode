@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 var usersRouter = require('./src/routes/users/user.routes');
 var assignmentsRouter = require('./src/routes/assignments/assignment.routes');
+var formatter = require('./src/services/json-formatter-service');
 
 
 var app = express();
@@ -24,16 +25,14 @@ app.use(constantsUrl.ASSIGNMENT_ROUTE, assignmentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.status(404).json({
-    message: "No such route exists"
-  })
+
+
+  res.status(500).json(formatter.formatJsonRespoonse(false,"No such route exists", 404, {}));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500).json({
-    message: "Error Message"
-  })
+  res.status(500).json(formatter.formatJsonRespoonse(false,"Error Message", 500, {}));
 });
 
 module.exports = app;
