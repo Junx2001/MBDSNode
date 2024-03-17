@@ -1,4 +1,5 @@
-let Assignment = require("../model/assignment");
+let Assignment = require("./assignment.model");
+const formatter = require("../../services/json-formatter-service");
 
 function getAssignments(req, res) {
   let aggregateQuery = Assignment.aggregate();
@@ -10,10 +11,9 @@ function getAssignments(req, res) {
     },
     (err, data) => {
       if (err) {
-        g;T
-        res.send(err);
+        res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
       }
-      res.send(data);
+      res.status(200).json(formatter.formatJsonRespoonse(true, "Assignments fetched successfully", 200, data));
     }
   );
 }
@@ -24,15 +24,11 @@ function getAssignment(req, res) {
 
   Assignment.findById(assignmentId, (err, assinment) => {
     if (err) {
-      res.send(err);
+      res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
     }
-    res.json(assignment);
+    res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment fetched successfully", 200, assinment));
   });
 
-  // Assignment.findOne({id: assignmentId}, (err, assignment) =>{
-  //     if(err){res.send(err)}
-  //     res.json(assignment);
-  // })
 }
 
 // Ajout d'un assignment (POST)
@@ -48,9 +44,9 @@ function postAssignment(req, res) {
 
   assignment.save((err) => {
     if (err) {
-      res.send("cant post assignment ", err);
+      res.status(500).json(formatter.formatJsonRespoonse(false,"Cannot POST Assignment : "+err, 500, {}));
     }
-    res.json({ message: `${assignment.nom} saved!` });
+    res.status(201).json(formatter.formatJsonRespoonse(true, "Assignment saved successfully", 201, {}));
   });
 }
 
@@ -65,12 +61,10 @@ function updateAssignment(req, res) {
     (err, assignment) => {
       if (err) {
         console.log(err);
-        res.send(err);
+        res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
       } else {
-        res.json({ message: "updated" });
+        res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment updated successfully", 200, {}));
       }
-
-      // console.log('updated ', assignment)
     }
   );
 }
@@ -79,9 +73,9 @@ function updateAssignment(req, res) {
 function deleteAssignment(req, res) {
   Assignment.findByIdAndRemove(req.params.id, (err, assignment) => {
     if (err) {
-      res.send(err);
+      res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
     }
-    res.json({ message: `${assignment.nom} deleted` });
+    res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment deleted successfully", 200, {}));
   });
 }
 
