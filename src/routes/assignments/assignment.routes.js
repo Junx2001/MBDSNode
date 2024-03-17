@@ -5,9 +5,9 @@ const assignmentControllers = require('./assignement.controllers');
 const router = express.Router();
 const UserRole = require('../../constants/UserRole');
 
-router.get('s',checkAuth, assignmentControllers.getAssignments);
-router.post('s',checkAuth, assignmentControllers.postAssignment);
-router.put('s', checkAuth, assignmentControllers.updateAssignment);
+router.get('',checkAuth, assignmentControllers.getAssignments);
+router.post('',checkAuth, assignmentControllers.postAssignment);
+router.put('', checkAuth, assignmentControllers.updateAssignment);
 
 router.get('/:id', checkAuth, assignmentControllers.getAssignment);
 router.delete('/:id', checkAuth, assignmentControllers.deleteAssignment);

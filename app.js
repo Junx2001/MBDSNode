@@ -6,6 +6,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 var usersRouter = require('./src/routes/users/user.routes');
+var assignmentsRouter = require('./src/routes/assignments/assignment.routes');
+
 
 var app = express();
 
@@ -18,6 +20,7 @@ app.use(bodyParser.json());
 const constantsUrl = require('./src/constants/Url');
 // Routes list
 app.use(constantsUrl.USER_ROUTE, usersRouter);
+app.use(constantsUrl.ASSIGNMENT_ROUTE, assignmentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
