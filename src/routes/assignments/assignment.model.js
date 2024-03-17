@@ -7,9 +7,9 @@ let AssignmentSchema = Schema({
     dateDeRendu: Date,
     nom: String,
     rendu: Boolean
-});
+}, { collection: 'assignments' });
 
 AssignmentSchema.plugin(aggregatePaginate);
 
 // C'est à travers ce modèle Mongoose qu'on pourra faire le CRUD
-module.exports = mongoose.model('assignments', AssignmentSchema);
+module.exports = mongoose.model('Assignment', AssignmentSchema);
