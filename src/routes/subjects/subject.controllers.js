@@ -4,7 +4,19 @@ let User = require("../users/user.model");
 const formatter = require("../../services/json-formatter-service");
 
 function getSubjects(req, res) {
-  let aggregateQuery = Subject.aggregate();
+   let aggregateQuery = Subject.aggregate([
+    {
+      $lookup: {
+        from: "users", // replace with your actual User collection name
+        localField: "professor_id",
+        foreignField: "_id",
+        as: "professor"
+      }
+    },
+    {
+      $unwind: "$professor"
+    },
+  ]);
   Subject.aggregatePaginate(
     aggregateQuery,
     {
