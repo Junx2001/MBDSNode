@@ -7,9 +7,9 @@ const UserRole = require('../../constants/UserRole');
 
 router.get('',checkAuth, assignmentControllers.getAssignments);
 router.post('',checkAuth, assignmentControllers.postAssignment);
-router.put('', [checkAuth, checkRole(["ROLE_STUDENT_PROFESSOR"])], assignmentControllers.updateAssignment);
+router.put('/:id', [checkAuth, checkRole(["ROLE_USER_PROFESSOR"])], assignmentControllers.updateAssignment);
 
 router.get('/:id', checkAuth, assignmentControllers.getAssignment);
-router.delete('/:id', [checkAuth, checkRole(["ROLE_STUDENT_PROFESSOR"])], assignmentControllers.deleteAssignment);
+router.delete('/:id', [checkAuth, checkRole(["ROLE_USER_PROFESSOR"])], assignmentControllers.deleteAssignment);
 
 module.exports = router;
