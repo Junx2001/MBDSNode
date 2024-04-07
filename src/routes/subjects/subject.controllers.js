@@ -1,7 +1,7 @@
 let Subject = require("./subject.model");
-let User = require("../users/user.model");
 
 const formatter = require("../../services/json-formatter-service");
+const subjectService = require("../../services/subject-service");
 
 function getSubjects(req, res) {
    let aggregateQuery = Subject.aggregate([
@@ -46,19 +46,38 @@ function getSubject(req, res) {
 }
 
 // Ajout d'un subject (POST)
-async function postSubject(req, res) {
+function postSubject(req, res, next) {
   let subject = new Subject();
   subject.name = req.body.name;
-  subject.picture = req.body.picture;
   subject.professor_id = req.user.userId;
 
   console.log("POST subject reçu :");
   console.log(subject);
 
-  subject.save((err) => {
+  subject.save(async (err, result) => {
     if (err) {
       res.status(500).json(formatter.formatJsonRespoonse(false,"Cannot POST Subject : "+err, 500, {}));
     }
+     // Check if a file has been uploaded and upload Subject image
+     if (req.file) {
+      try {
+        await subjectService.uploadSubjectImage(req, res, result);
+      } catch (err) {
+        console.log(err);
+
+        res
+          .status(400)
+          .json(
+            formatter.formatJsonRespoonse(
+              false,
+              err.toString(),
+              400,
+              {}
+            )
+          );
+      }
+    }
+
     res.status(201).json(formatter.formatJsonRespoonse(true, "Subject saved successfully", 201, subject));
   });
 }
