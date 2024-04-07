@@ -3,9 +3,46 @@ let User = require("../users/user.model");
 let Subject = require("../subjects/subject.model");
 
 const formatter = require("../../services/json-formatter-service");
+const { ObjectId } = require("bson");
 
 function getAssignments(req, res) {
-  let aggregateQuery = Assignment.aggregate();
+
+  let aggregateQuery = Assignment.aggregate([
+    {
+      $lookup: {
+        from: "users", // replace with your actual User collection name
+        localField: "student_id",
+        foreignField: "_id",
+        as: "student"
+      }
+    },
+    {
+      $lookup: {
+        from: "subjects", // replace with your actual Subject collection name
+        localField: "subject_id",
+        foreignField: "_id",
+        as: "subject"
+      }
+    },
+    {
+      $unwind: "$student"
+    },
+    {
+      $unwind: "$subject"
+    },
+    {
+      $lookup: {
+        from: "users", // replace with your actual Professor collection name
+        localField: "subject.professor_id",
+        foreignField: "_id",
+        as: "subject.professor"
+      }
+    },
+    {
+      $unwind: "$subject.professor"
+    }
+  ]);
+
   Assignment.aggregatePaginate(
     aggregateQuery,
     {
@@ -21,18 +58,50 @@ function getAssignments(req, res) {
   );
 }
 
-// Récupérer un assignment par son id (GE)
+// Récupérer un assignment par son id (GET)
 function getAssignment(req, res) {
   let assignmentId = req.params.id;
 
-  Assignment.findById(assignmentId, (err, assinment) => {
+  Assignment.aggregate([
+    { $match: { "_id": ObjectId(assignmentId) } },
+    {
+      $lookup: {
+        from: "users", // replace with your actual User collection name
+        localField: "student_id",
+        foreignField: "_id",
+        as: "student"
+      }
+    },
+    {
+      $lookup: {
+        from: "subjects", // replace with your actual Subject collection name
+        localField: "subject_id",
+        foreignField: "_id",
+        as: "subject"
+      }
+    },
+    { $unwind: "$student" },
+    { $unwind: "$subject" },
+    {
+      $lookup: {
+        from: "users", // replace with your actual Professor collection name
+        localField: "subject.professor_id",
+        foreignField: "_id",
+        as: "subject.professor"
+      }
+    },
+    { $unwind: "$subject.professor" }
+  ])
+  .exec((err, assignment) => {
     if (err) {
+      console.log(err);
       res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
     }
-    res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment fetched successfully", 200, assinment));
+    res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment fetched successfully", 200, assignment));
   });
-
 }
+
+
 
 // Ajout d'un assignment (POST)
 async function postAssignment(req, res) {
