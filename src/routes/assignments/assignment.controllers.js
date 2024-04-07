@@ -1,4 +1,7 @@
 let Assignment = require("./assignment.model");
+let User = require("../users/user.model");
+let Subject = require("../subjects/subject.model");
+
 const formatter = require("../../services/json-formatter-service");
 
 function getAssignments(req, res) {
@@ -32,12 +35,24 @@ function getAssignment(req, res) {
 }
 
 // Ajout d'un assignment (POST)
-function postAssignment(req, res) {
+async function postAssignment(req, res) {
   let assignment = new Assignment();
-  assignment.id = req.body.id;
   assignment.nom = req.body.nom;
+
+  assignment.student_id = req.user.userId;
+
+  assignment.subject_id = req.body.subject_id;
+  assignment.note = req.body.note;
+  assignment.remarque = req.body.remarque;
   assignment.dateDeRendu = req.body.dateDeRendu;
   assignment.rendu = req.body.rendu;
+
+  let student = await User.findOne({ _id: req.user.userId, role: "ROLE_USER_STUDENT" });
+  let subject = await Subject.findOne({ _id: req.body.subject_id });
+
+  if (!student || !subject) {
+    return res.status(400).json(formatter.formatJsonRespoonse(false,"Student or Subject not found", 400, {}));
+  }
 
   console.log("POST assignment reçu :");
   console.log(assignment);
@@ -46,13 +61,13 @@ function postAssignment(req, res) {
     if (err) {
       res.status(500).json(formatter.formatJsonRespoonse(false,"Cannot POST Assignment : "+err, 500, {}));
     }
-    res.status(201).json(formatter.formatJsonRespoonse(true, "Assignment saved successfully", 201, {}));
+    res.status(201).json(formatter.formatJsonRespoonse(true, "Assignment saved successfully", 201, assignment));
   });
 }
 
 // Update d'un assignment (PUT)
 function updateAssignment(req, res) {
-  console.log("UPDATE recu assignment : ");
+  console.log("UPDATE reçu assignment : ");
   console.log(req.body);
   Assignment.findByIdAndUpdate(
     req.body._id,
@@ -63,7 +78,7 @@ function updateAssignment(req, res) {
         console.log(err);
         res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
       } else {
-        res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment updated successfully", 200, {}));
+        res.status(200).json(formatter.formatJsonRespoonse(true, "Assignment updated successfully", 200, assignment));
       }
     }
   );
