@@ -40,7 +40,8 @@ function getAssignments(req, res) {
     },
     {
       $unwind: "$subject.professor"
-    }
+    },
+    { $sort : { "_id" : -1 } }
   ]);
 
   Assignment.aggregatePaginate(
@@ -136,10 +137,11 @@ async function postAssignment(req, res) {
 
 // Update d'un assignment (PUT)
 function updateAssignment(req, res) {
+  let assignmentId = req.params.id;
   console.log("UPDATE reçu assignment : ");
   console.log(req.body);
   Assignment.findByIdAndUpdate(
-    req.body._id,
+    assignmentId,
     req.body,
     { new: true },
     (err, assignment) => {
