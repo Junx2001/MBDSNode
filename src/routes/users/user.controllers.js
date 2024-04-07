@@ -36,6 +36,8 @@ const userRegister = async (req, res, next) => {
               email: req.body.email,
               password: hash,
               name: req.body.name,
+              role: req.body.role,
+              active: req.body.active,
             });
             user
               .save()
