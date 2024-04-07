@@ -3,6 +3,7 @@ class Url {
     static API_ROUTE = '/api'
     static USER_ROUTE = this.API_ROUTE+'/users';
     static ASSIGNMENT_ROUTE = this.API_ROUTE+'/assignment';
+    static SUBJECT_ROUTE = this.API_ROUTE+'/subject';
 
 }
 

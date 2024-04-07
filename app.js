@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 var usersRouter = require('./src/routes/users/user.routes');
 var assignmentsRouter = require('./src/routes/assignments/assignment.routes');
+var subjectsRouter = require('./src/routes/subjects/subject.routes');
 var formatter = require('./src/services/json-formatter-service');
 
 
@@ -22,6 +23,7 @@ const constantsUrl = require('./src/constants/Url');
 // Routes list
 app.use(constantsUrl.USER_ROUTE, usersRouter);
 app.use(constantsUrl.ASSIGNMENT_ROUTE, assignmentsRouter);
+app.use(constantsUrl.SUBJECT_ROUTE, subjectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

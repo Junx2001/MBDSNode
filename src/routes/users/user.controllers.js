@@ -36,6 +36,8 @@ const userRegister = async (req, res, next) => {
               email: req.body.email,
               password: hash,
               name: req.body.name,
+              role: req.body.role,
+              active: req.body.active,
             });
             user
               .save()
@@ -148,7 +150,7 @@ const userLogin = (req, res, next) => {
           .json(
             formatter.formatJsonRespoonse(
               false,
-              "Auth failed: Please Verify your email",
+              "Auth failed: Please contact our support to activate your account",
               401,
               {}
             )
