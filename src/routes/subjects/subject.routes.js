@@ -10,6 +10,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).single('file');
 
 router.get('',checkAuth, subjectControllers.getSubjects);
+router.get('/nopagination',checkAuth, subjectControllers.getSubjectsUnpaginated);
+
 router.post('',[checkAuth, checkRole(["ROLE_USER_PROFESSOR"]), upload], subjectControllers.postSubject);
 router.put('', [checkAuth, checkRole(["ROLE_USER_PROFESSOR"])], subjectControllers.updateSubject);
 
