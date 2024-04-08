@@ -7,7 +7,39 @@ const { ObjectId } = require("bson");
 
 function getAssignments(req, res) {
 
-  let aggregateQuery = Assignment.aggregate([
+  let rendu = req.query.rendu;
+  let nom = req.query.nom;
+  let dateDeRendu = req.query.dateDeRendu;
+
+  // let startDate = req.query.startDate;
+  // let endDate = req.query.endDate;
+
+  let matchQuery = {};
+  if(rendu)
+    // Cast rendu to boolean and check its value
+    matchQuery.rendu = rendu === "true";
+  if(nom)
+    // Check if the name contains the query
+    matchQuery.nom = { $regex: nom, $options: "i" };
+  if(dateDeRendu) {
+      let date = new Date(dateDeRendu);
+      let nextDay = new Date(date);
+      nextDay.setDate(date.getDate() + 1);
+      // Check if the date part of the dateDeRendu is within the query date
+      matchQuery.dateDeRendu = { $gte: date, $lt: nextDay };
+  }
+  // if(startDate && endDate) {
+  //   let start = new Date(startDate);
+  //   let end = new Date(endDate);
+  //   end.setDate(end.getDate() + 1);
+  //   // Check if the dateDeRendu is within the query date
+  //   matchQuery.dateDeRendu = { $gte: start, $lt: end };
+  // }
+
+
+  console.log(matchQuery);
+
+  let queryArray = [
     {
       $lookup: {
         from: "users", // replace with your actual User collection name
@@ -42,7 +74,13 @@ function getAssignments(req, res) {
       $unwind: "$subject.professor"
     },
     { $sort : { "_id" : -1 } }
-  ]);
+  ];
+
+  if (Object.keys(matchQuery).length > 0) {
+    queryArray.unshift({ $match: matchQuery });
+  }
+
+  let aggregateQuery = Assignment.aggregate(queryArray);
 
   Assignment.aggregatePaginate(
     aggregateQuery,
