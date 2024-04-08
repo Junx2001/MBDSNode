@@ -32,6 +32,28 @@ function getSubjects(req, res) {
   );
 }
 
+function getSubjectsUnpaginated(req, res) {
+  Subject.aggregate([
+   {
+     $lookup: {
+       from: "users", // replace with your actual User collection name
+       localField: "professor_id",
+       foreignField: "_id",
+       as: "professor"
+     }
+   },
+   {
+     $unwind: "$professor"
+   },
+ ]).exec((err, data) => {
+    if (err) {
+      res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
+    }
+    res.status(200).json(formatter.formatJsonRespoonse(true, "Subjects fetched successfully", 200, data));
+  });
+
+}
+
 // Récupérer un subject par son id (GE)
 function getSubject(req, res) {
   let subjectId = req.params.id;
@@ -117,4 +139,5 @@ module.exports = {
   getSubject,
   updateSubject,
   deleteSubject,
+  getSubjectsUnpaginated
 };
