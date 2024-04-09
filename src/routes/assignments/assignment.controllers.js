@@ -11,10 +11,13 @@ function getAssignments(req, res) {
   let nom = req.query.nom;
   let dateDeRendu = req.query.dateDeRendu;
 
-  // let startDate = req.query.startDate;
-  // let endDate = req.query.endDate;
 
   let matchQuery = {};
+  if(req.user.role === "ROLE_USER_STUDENT") {
+    matchQuery.student_id = req.user.userId;
+  }
+
+  
   if(rendu)
     // Cast rendu to boolean and check its value
     matchQuery.rendu = rendu === "true";
@@ -28,14 +31,6 @@ function getAssignments(req, res) {
       // Check if the date part of the dateDeRendu is within the query date
       matchQuery.dateDeRendu = { $gte: date, $lt: nextDay };
   }
-  // if(startDate && endDate) {
-  //   let start = new Date(startDate);
-  //   let end = new Date(endDate);
-  //   end.setDate(end.getDate() + 1);
-  //   // Check if the dateDeRendu is within the query date
-  //   matchQuery.dateDeRendu = { $gte: start, $lt: end };
-  // }
-
 
   console.log(matchQuery);
 
@@ -79,6 +74,11 @@ function getAssignments(req, res) {
   if (Object.keys(matchQuery).length > 0) {
     queryArray.unshift({ $match: matchQuery });
   }
+
+  if(req.user.role === "ROLE_USER_PROFESSOR") {
+    queryArray.push({ $match: { "subject.professor_id": ObjectId(req.user.userId) } });
+  }
+
 
   let aggregateQuery = Assignment.aggregate(queryArray);
 
