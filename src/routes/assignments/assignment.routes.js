@@ -6,6 +6,7 @@ const router = express.Router();
 const UserRole = require('../../constants/UserRole');
 
 router.get('',checkAuth, assignmentControllers.getAssignments);
+router.get('/nopagination',checkAuth, assignmentControllers.getAssignmentsUnpaginated);
 router.post('',checkAuth, assignmentControllers.postAssignment);
 router.put('/:id', [checkAuth, checkRole(["ROLE_USER_PROFESSOR"])], assignmentControllers.updateAssignment);
 
