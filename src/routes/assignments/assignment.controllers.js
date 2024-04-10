@@ -14,7 +14,7 @@ function getAssignments(req, res) {
 
   let matchQuery = {};
   if(req.user.role === "ROLE_USER_STUDENT") {
-    matchQuery.student_id = req.user.userId;
+    matchQuery.student_id = ObjectId(req.user.userId);
   }
 
   
@@ -95,6 +95,93 @@ function getAssignments(req, res) {
       res.status(200).json(formatter.formatJsonRespoonse(true, "Assignments fetched successfully", 200, data));
     }
   );
+}
+
+function getAssignmentsUnpaginated(req, res) {
+
+  let rendu = req.query.rendu;
+  let nom = req.query.nom;
+  let dateDeRendu = req.query.dateDeRendu;
+
+
+  let matchQuery = {};
+  if(req.user.role === "ROLE_USER_STUDENT") {
+    matchQuery.student_id = ObjectId(req.user.userId);
+  }
+
+  
+  if(rendu)
+    // Cast rendu to boolean and check its value
+    matchQuery.rendu = rendu === "true";
+  if(nom)
+    // Check if the name contains the query
+    matchQuery.nom = { $regex: nom, $options: "i" };
+  if(dateDeRendu) {
+      let date = new Date(dateDeRendu);
+      let nextDay = new Date(date);
+      nextDay.setDate(date.getDate() + 1);
+      // Check if the date part of the dateDeRendu is within the query date
+      matchQuery.dateDeRendu = { $gte: date, $lt: nextDay };
+  }
+
+  console.log(matchQuery);
+
+  let queryArray = [
+    {
+      $lookup: {
+        from: "users", // replace with your actual User collection name
+        localField: "student_id",
+        foreignField: "_id",
+        as: "student"
+      }
+    },
+    {
+      $lookup: {
+        from: "subjects", // replace with your actual Subject collection name
+        localField: "subject_id",
+        foreignField: "_id",
+        as: "subject"
+      }
+    },
+    {
+      $unwind: "$student"
+    },
+    {
+      $unwind: "$subject"
+    },
+    {
+      $lookup: {
+        from: "users", // replace with your actual Professor collection name
+        localField: "subject.professor_id",
+        foreignField: "_id",
+        as: "subject.professor"
+      }
+    },
+    {
+      $unwind: "$subject.professor"
+    },
+    { $sort : { "_id" : -1 } }
+  ];
+
+  if (Object.keys(matchQuery).length > 0) {
+    queryArray.unshift({ $match: matchQuery });
+  }
+
+  if(req.user.role === "ROLE_USER_PROFESSOR") {
+    queryArray.push({ $match: { "subject.professor_id": ObjectId(req.user.userId) } });
+  }
+
+
+  let aggregateQuery = Assignment.aggregate(queryArray);
+
+  // Getting Assginments matching the query but without pagination
+  aggregateQuery.exec((err, data) => {
+    if (err) {
+      res.status(500).json(formatter.formatJsonRespoonse(false, err, 500, {}));
+    }
+    res.status(200).json(formatter.formatJsonRespoonse(true, "Assignments fetched successfully", 200, data));
+  });
+ 
 }
 
 // Récupérer un assignment par son id (GET)
@@ -209,4 +296,5 @@ module.exports = {
   getAssignment,
   updateAssignment,
   deleteAssignment,
+  getAssignmentsUnpaginated
 };
