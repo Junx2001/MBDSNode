@@ -21,14 +21,22 @@ app.use(bodyParser.json());
 
 const constantsUrl = require('./src/constants/Url');
 // Routes list
+app.use(constantsUrl.HEALTH_STATUS, (req, res) => {
+  res.status(200).json(formatter.formatJsonRespoonse(true, "Server is running", 200, {
+    status: "No worry, our servers are running fine.",
+    actual_time: new Date().toISOString(),
+    server: "Node.js",
+    host_adress: req.hostname,
+    app_port: process.env.PORT,
+    app_name: "Assignment Management System",
+  }));
+});
 app.use(constantsUrl.USER_ROUTE, usersRouter);
 app.use(constantsUrl.ASSIGNMENT_ROUTE, assignmentsRouter);
 app.use(constantsUrl.SUBJECT_ROUTE, subjectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-
-
   res.status(500).json(formatter.formatJsonRespoonse(false,"No such route exists", 404, {}));
 });
 
