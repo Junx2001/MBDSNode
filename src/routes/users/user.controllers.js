@@ -225,6 +225,65 @@ const getProfile = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const userId = req.user.userId;
+  const user = await User.findById(userId);
+
+  const name = req.body.name;
+  const password = req.body.password;
+  const email = req.body.email;
+  if (user) {
+    if (name) user.name = name;
+    if (password){
+      user.password = bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if (err) {
+          return res
+            .status(500)
+            .json(formatter.formatJsonRespoonse(false, err, 500, { "error" : "Error in hashing password"}));
+        } else {
+          return hash;
+        }
+      });
+    }
+    if (email) user.email = email;
+
+    console.log("UPDATE User Profile PUT : ");
+    console.log(user);
+
+    // Check if a file has been uploaded and upload user profile image
+    if (req.file) {
+      try {
+        await userService.uploadUserImage(req, res, user);
+      } catch (err) {
+        console.log(err);
+        res
+          .status(400)
+          .json(formatter.formatJsonRespoonse(false, err.toString(), 400, {"error" : "Error in uploading image"}));
+      }
+    }
+
+    await user
+      .save()
+      .then((result) => {
+        res.status(200).json(
+          formatter.formatJsonRespoonse(true, "User Profile Updated", 200, {
+            user: result,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        res
+          .status(500)
+          .json(formatter.formatJsonRespoonse(false, err.toString(), 500, {}));
+      });
+  } else {
+    res
+      .status(404)
+      .json(formatter.formatJsonRespoonse(false, "User Not Found", 404, {}));
+  }
+};
+
 // Add Image to Storage and return the file path
 const uploadProfileImage = async (req, res) => {
   try {
@@ -243,4 +302,5 @@ module.exports = {
   userLogin,
   getProfile,
   uploadProfileImage,
+  updateProfile,
 };

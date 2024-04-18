@@ -13,7 +13,8 @@ const UserRole = require('../../constants/UserRole');
 router.post('/signup', upload,  userControllers.userRegister);
 router.post('/login', userControllers.userLogin);
 router.get('/profile', checkAuth, userControllers.getProfile);
-router.post('/uploadProfile', [checkAuth,upload] , userControllers.uploadProfileImage);
+router.put('/update', [checkAuth, upload], userControllers.updateProfile);
+//router.post('/uploadProfile', [checkAuth,upload] , userControllers.uploadProfileImage);
 
 
 module.exports = router;
