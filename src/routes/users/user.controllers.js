@@ -231,20 +231,25 @@ const updateProfile = async (req, res) => {
 
   const name = req.body.name;
   const password = req.body.password;
+  console.log("Password : " + password)
   const email = req.body.email;
   if (user) {
     if (name) user.name = name;
-    if (password){
-      user.password = bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if (err) {
-          return res
-            .status(500)
-            .json(formatter.formatJsonRespoonse(false, err, 500, { "error" : "Error in hashing password"}));
-        } else {
-          return hash;
-        }
-      });
+    
+    if (password) {
+      try {
+        const hash = await bcrypt.hash(password, 10);
+        user.password = hash;
+      } catch (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Error in hashing password",
+          error: err
+        });
+      }
     }
+
+
     if (email) user.email = email;
 
     console.log("UPDATE User Profile PUT : ");
