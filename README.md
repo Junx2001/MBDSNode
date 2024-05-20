@@ -1,3 +1,7 @@
+![Node.js Badge](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Passed Badge](https://img.shields.io/badge/Passed-success?style=for-the-badge&logo=checkmark&logoColor=white)
+![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
 # Project: MBDS Angular Assignments
 
 [API Documentation from Postman of Assignment](https://documenter.getpostman.com/view/14904994/2sA3QmFarh)  
