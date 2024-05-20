@@ -1,9 +1,9 @@
 # Project: MBDS Angular Assignments
 
-[API Documentation from Postman of Assignment](https://documenter.getpostman.com/view/14904994/2sA3QmFarh)
-[API Documentation from Postman of Subject](https://documenter.getpostman.com/view/14904994/2sA3QmFari)
-[API Documentation from Postman of Authentification](https://documenter.getpostman.com/view/14904994/2sA3QmFarj)
-[API Documentation from Postman of Global Routes](https://documenter.getpostman.com/view/14904994/2sA3QmFark)
+[API Documentation from Postman of Assignment](https://documenter.getpostman.com/view/14904994/2sA3QmFarh)  
+[API Documentation from Postman of Subject](https://documenter.getpostman.com/view/14904994/2sA3QmFari)  
+[API Documentation from Postman of Authentification](https://documenter.getpostman.com/view/14904994/2sA3QmFarj)  
+[API Documentation from Postman of Global Routes](https://documenter.getpostman.com/view/14904994/2sA3QmFark)  
 
 
 ## All Availables Methods for the ressource Assignment
