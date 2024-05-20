@@ -1,4 +1,4 @@
-# Project: Assignments
+# Project: MBDS Angular Assignments
 ## All Availables Methods for the ressource Assignment
 
 ## End-point: GET - All Assignments
