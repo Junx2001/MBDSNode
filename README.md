@@ -79,7 +79,7 @@ List of variables used in the project
 
 ## Run Locally
 
-Install Github CLI first [Github CLI](https://github.com/cli/cli#installation)
+Install Git to Your Machine
 
 Clone the project
 
