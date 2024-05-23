@@ -1,21 +1,127 @@
 ░█▀█░█▀▀░█▀▀░▀█▀░█▀▀░█▀█░█▄█░█▀▀░█▀█░▀█▀
 ░█▀█░▀▀█░▀▀█░░█░░█░█░█░█░█░█░█▀▀░█░█░░█░
 ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀░░▀░
-
-Live Application available at [Assignment Application API](https://assignmentapp.me/api)  
-
 ![Node.js Badge](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Passed Badge](https://img.shields.io/badge/Passed-success?style=for-the-badge&logo=checkmark&logoColor=white)
 ![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Express.js Badge](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDB Badge](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
-# Project: MBDS Angular Assignments
+
+# MBDS Assignment APP API
+
+Application Programming interface for assignment application. This API is used by angular for fetching data and managing them
+
+
+## Demo Live Application 
+
+Live Application available at [Assignment Application API](https://assignmentapp.me/api)  
+
+Official link to the angular Assignment App management system which is using the last version of this API : https://angular-mbds-assignment.vercel.app/
+
+
+## Online API Reference
 
 [API Documentation from Postman of Assignment](https://documenter.getpostman.com/view/14904994/2sA3QmFarh)  
 [API Documentation from Postman of Subject](https://documenter.getpostman.com/view/14904994/2sA3QmFari)  
 [API Documentation from Postman of Authentification](https://documenter.getpostman.com/view/14904994/2sA3QmFarj)  
 [API Documentation from Postman of Global Routes](https://documenter.getpostman.com/view/14904994/2sA3QmFark)  
+
+## Environment Variables
+[.env.dist](./.env.dist) file can be used as `.env` template.
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`PORT`
+
+`jwtSecret` 
+
+`DB_URI`
+
+`API_KEY` 
+
+`AUTH_DOMAIN` 
+
+`PROJECT_ID`
+
+`STORAGE_BUCKET`
+
+`MESSAGING_SENDER_ID`
+
+`APP_ID`
+
+`MEASUREMENT_ID`
+
+
+## Constants Variables
+
+List of variables used in the project 
+
+#### Base Url path constants (src/constants/Url.js)
+`API_ROUTE` : /api
+`USER_ROUTE` : `API_ROUTE`/users
+`ASSIGNMENT_ROUTE` : `API_ROUTE`/assignment
+`SUBJECT_ROUTE` : `API_ROUTE`/subject
+`HEALTH_STATUS` : `API_ROUTE`/health
+
+
+#### User Roles constants
+`ROLE_USER_STUDENT` : ROLE_USER_STUDENT
+
+`ROLE_USER_PROFESSOR` : ROLE_USER_PROFESSOR
+
+## Run Locally
+
+Install Github CLI first [Github CLI](https://github.com/cli/cli#installation)
+
+Clone the project
+
+```bash
+  git clone https://github.com/Junx2001/MBDSNode.git
+```
+
+Create `.env` using `.env.dist` as a template and fill with required environnement variables
+
+Go to the project directory
+
+```bash
+  cd MBDSNode
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+You can now access the server at [http://localhost:3000](http://localhost:3000) or any PORT specified in .env
+
+## Tech Stack
+
+**Server:** Node, Express
+
+**Databse:** MongoDb
+
+**File Storage:** Firebase Fire Store
+
+
+## Deployment
+
+Hosted by (https://www.digitalocean.com/)
+
+## Authors
+
+- [@junx2001](https://github.com/Junx2001)
+
+## Official Detailled Documentation
+
+Will Be available soon 😊🤖🤖
 
 
 ## All Availables Methods for the ressource Assignment
