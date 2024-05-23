@@ -1,6 +1,8 @@
 ░█▀█░█▀▀░█▀▀░▀█▀░█▀▀░█▀█░█▄█░█▀▀░█▀█░▀█▀
 ░█▀█░▀▀█░▀▀█░░█░░█░█░█░█░█░█░█▀▀░█░█░░█░
 ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀░░▀░
+
+
 ![Node.js Badge](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Passed Badge](https://img.shields.io/badge/Passed-success?style=for-the-badge&logo=checkmark&logoColor=white)
 ![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -58,11 +60,16 @@ To run this project, you will need to add the following environment variables to
 List of variables used in the project 
 
 #### Base Url path constants (src/constants/Url.js)
-`API_ROUTE` : /api
-`USER_ROUTE` : `API_ROUTE`/users
-`ASSIGNMENT_ROUTE` : `API_ROUTE`/assignment
-`SUBJECT_ROUTE` : `API_ROUTE`/subject
-`HEALTH_STATUS` : `API_ROUTE`/health
+`API_ROUTE` : /api  
+
+`USER_ROUTE` : `API_ROUTE`/users  
+
+`ASSIGNMENT_ROUTE` : `API_ROUTE`/assignment  
+
+`SUBJECT_ROUTE` : `API_ROUTE`/subject  
+
+`HEALTH_STATUS` : `API_ROUTE`/health  
+
 
 
 #### User Roles constants
@@ -124,7 +131,7 @@ Hosted by (https://www.digitalocean.com/)
 Will Be available soon 😊🤖🤖
 
 
-## All Availables Methods for the ressource Assignment
+# All Availables Methods for the ressource Assignment
 
 ## End-point: GET - All Assignments
 ### Assignment Page Retrieval
