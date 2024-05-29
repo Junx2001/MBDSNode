@@ -5,15 +5,15 @@ var logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+var app = express();
+
+app.use(cors());
+
 var usersRouter = require('./src/routes/users/user.routes');
 var assignmentsRouter = require('./src/routes/assignments/assignment.routes');
 var subjectsRouter = require('./src/routes/subjects/subject.routes');
 var formatter = require('./src/services/json-formatter-service');
 
-
-var app = express();
-
-app.use(cors());
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
