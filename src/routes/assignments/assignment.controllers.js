@@ -68,7 +68,7 @@ function getAssignments(req, res) {
     {
       $unwind: "$subject.professor"
     },
-    { $sort : { "_id" : -1 } }
+    { $sort : { "dateDeRendu" : -1 } }
   ];
 
   if (Object.keys(matchQuery).length > 0) {

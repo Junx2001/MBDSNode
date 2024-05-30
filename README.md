@@ -10,7 +10,7 @@
 ![MongoDB Badge](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
-# MBDS Assignment APP API
+# MBDS Assignment APP API 👩‍🚀🚀
 
 Application Programming interface for assignment application. This API is used by angular for fetching data and managing them
 
@@ -34,26 +34,25 @@ Official link to the angular Assignment App management system which is using the
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`PORT`
+<span style="color: red">(Please do not share to anyone because theses are very sensitive contents and are only essentially used for the school project notation !!!)</span>
 
-`jwtSecret` 
+```markdown
+PORT = 3000
+jwtSecret = mysecret
 
-`DB_URI`
-
-`API_KEY` 
-
-`AUTH_DOMAIN` 
-
-`PROJECT_ID`
-
-`STORAGE_BUCKET`
-
-`MESSAGING_SENDER_ID`
-
-`APP_ID`
-
-`MEASUREMENT_ID`
-
+### MongoDB Config ###
+DB_URI = mongodb+srv://ratsirarsonj:joharisoa2001@cluster0.d9pldiu.mongodb.net/AssignmentApp?retryWrites=true&w=majority&appName=Cluster0
+### MongoDB Config ###
+### Firebase Config ###
+API_KEY =AIzaSyCeL79JXzfZA3K7CuUeq4OfJiOCBggy_Oo
+AUTH_DOMAIN =mbds-assignment.firebaseapp.com
+PROJECT_ID =mbds-assignment 
+STORAGE_BUCKET =gs://mbds-assignment.appspot.com
+MESSAGING_SENDER_ID =745752359989 
+APP_ID =1:745752359989:web:eaecf5f3c89ee55e36ad7c
+MEASUREMENT_ID =G-EL1XXWQ4FC 
+### Firebase Config ###
+```
 
 ## Constants Variables
 
