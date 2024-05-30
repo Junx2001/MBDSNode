@@ -121,9 +121,11 @@ You can now access the server at [http://localhost:3000](http://localhost:3000) 
 
 Hosted by (https://www.digitalocean.com/)
 
-## Authors
+## Contributors
 
-- [@junx2001](https://github.com/Junx2001)
+[50 - Ratsirarson Joharisoa](https://github.com/Junx2001)  
+
+[13 - Rafamantanantsoa Rotsy Vonimanitra](https://github.com/rotsyrotsy)
 
 ## Official Detailled Documentation
 
